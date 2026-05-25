@@ -4,9 +4,9 @@ An open-source, 3D-printed **ultrasonic deterrent for dogs and cats**, built aro
 
 It is deliberately *loud*. The ESP32 drives the ultrasonic transducer through an L298N in a **full H-bridge** off a **12 V** supply, which is what makes the burst strong enough that a dog will actually break off and leave the zone rather than just twitch an ear.
 
-| Real device | Concept render |
-|---|---|
-| ![Real 3D-printed device](docs/images/device-real.jpg) | ![Studio concept render](docs/images/render-concept.jpg) |
+| Real device | Concept render | Fusion 360 (CAD) |
+|---|---|---|
+| ![Real 3D-printed device](docs/images/device-real.jpg) | ![Studio concept render](docs/images/render-concept.jpg) | ![Fusion 360 CAD view](docs/images/fusion-cad.png) |
 
 > ⚠️ **Use responsibly.** This is an aversive device. It is meant to keep a pet out of a specific spot, not to punish or harm. Only run it on the active-hours schedule, point it at the zone (not at where the animal rests/sleeps), and dial back the burst if your pet is simply distressed rather than redirected. Do not aim it at people or use it where it could affect other animals you don't intend to.
 
