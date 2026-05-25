@@ -64,11 +64,12 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | 1 | Ultrasonic piezo tweeter, ~25 kHz, Ø50 mm | 4× Ø3.2 mounting holes on a 52 mm PCD |
 | 1 | **12 V DC power adapter, ≥1–2 A** | powers the H-bridge at 12 V (high SPL) |
 | 1 | **12 V barrel-jack socket** (panel mount, 5.5 × 2.1 mm) | power input on the enclosure |
+| 1 | **DC-DC step-down (buck) converter — XL4015** | drops 12 V → 5 V for the ESP32 |
 | 1 | SPDT toggle switch | mains/power on-off |
 | 1 | 3 mm LED + 220 Ω resistor *(optional)* | power indicator (not driven by firmware) |
 | — | Hookup wire (AWG 28–30), heat-shrink | internal wiring harness |
 
-> The build is powered by **12 V via the barrel jack**. The L298N's onboard 5 V regulator (keep the 5V-EN jumper on; valid up to 12 V input) feeds the ESP32 via its `5V`/`VIN` pin. During flashing you can also just power the ESP32 over USB.
+> The build is powered by **12 V via the barrel jack**. The 12 V feeds the L298N motor supply directly (for high SPL), while an **XL4015 buck converter steps 12 V down to 5 V** to power the ESP32 via its `5V` pin (set the XL4015 output trimmer to 5 V before connecting it). During flashing you can also just power the ESP32 over USB.
 
 ### 3D-printed parts (`hardware/print/`)
 
@@ -121,7 +122,7 @@ Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infil
 | L298N `IN3` | **12** | H-bridge input (inverted PWM, via GPIO matrix) |
 | L298N `ENA` (+`ENB`) | **14** | shared H-bridge enable |
 | Transducer | — | across L298N **OUT1 ↔ OUT3** |
-| Power | — | 12 V → L298N `Vs`; ESP32 `5V` ← L298N onboard 5 V regulator |
+| Power | — | 12 V → L298N `Vs`; 12 V → XL4015 buck → 5 V → ESP32 `5V` |
 
 The piezo is connected **between OUT1 and OUT3** (not to ground) — that is what gives the full H-bridge ±12 V swing.
 

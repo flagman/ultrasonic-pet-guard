@@ -2,7 +2,7 @@
 
 Final prototype form: rectangular base + cylindrical drum head on a single tilt axis, concentric with the drum surface. A single clamping thumbscrew locks the tilt by friction. The cable runs through a hollow stub axle — it only rotates, it does not stretch.
 
-> **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**, feeding the L298N H-bridge directly at 12 V — this is what gives the high SPL. The ESP32 is powered from the L298N's onboard 5 V regulator. The earlier USB-C-5V-plus-DC-DC-step-up scheme described in older notes is *not* used in the shipped build; powering the H-bridge from 12 V directly is simpler and removes the step-up converter.
+> **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**. The 12 V feeds the L298N H-bridge directly — this is what gives the high SPL — while an **XL4015 DC-DC step-down (buck) converter drops 12 V → 5 V** to power the ESP32. The earlier USB-C-5V-plus-step-*up* scheme described in older notes is *not* used in the shipped build.
 
 ## Dimensions (updated v0.7.1)
 
@@ -65,7 +65,7 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 | **E9** | Heat-shrink tubing | 2 mm + 3 mm | – | 30 cm each | On the harness |
 | **E10** | Through-axle harness | 7 conductors, overall Ø ~4 mm | – | 12 cm | Hollow axle → base |
 | **E11** | **12 V barrel-jack socket** | panel-mount, 5.5 × 2.1 mm | – | 1 | Rear wall of the base (power input) |
-| ~~**E12**~~ | ~~DC-DC step-up~~ | **not used** — superseded by the 12 V supply | – | – | (would only be needed for a 5 V-only build) |
+| **E12** | **DC-DC step-down (buck) — XL4015** | 12 V → 5 V, output trimmer set to 5 V | ~52 × 27 × h12 | 1 | In the base, powers the ESP32 |
 
 **Harness pinout** through the hollow stub axle (7 wires):
 
@@ -82,12 +82,12 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 **Power (as-built, 12 V):**
 
 ```
-12 V adapter → barrel jack → L298N Vs (12 V, drives the H-bridge / piezo)
-                          └→ L298N onboard 5 V regulator → ESP32 5V pin
+12 V adapter → barrel jack ─┬→ L298N Vs (12 V, drives the H-bridge / piezo)
+                            └→ XL4015 buck (12 V → 5 V) → ESP32 5V pin
 common GND
 ```
 
-Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. Keep the L298N's 5V-EN jumper on (valid for inputs up to 12 V) so its regulator can power the ESP32. During flashing the ESP32 can also be powered over USB.
+Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. The ESP32 is powered from the XL4015 buck converter (set its output trimmer to 5 V *before* wiring it to the ESP32). During flashing the ESP32 can also be powered over USB.
 
 ---
 
@@ -222,8 +222,8 @@ For the first prototype this can be skipped. The friction clamp is sufficient.
 
 1. Print P1–P5 (P6, P7 — optional).
 2. Heat-set the brass inserts (H3 × 2 in the drum; H6 × 4 in the base for the top-plate/lid screws).
-3. Inside the base, mount the ESP32 (E1, rear-left) and the L298N (E2, front-center) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
-4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V). Keep the L298N 5V-EN jumper on so its 5 V regulator output feeds the ESP32 5V pin. Common GND.
+3. Inside the base, mount the ESP32 (E1, rear-left), the L298N (E2, front-center), and the XL4015 buck (E12) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
+4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V), and a branch to the XL4015 buck (E12) input. Set the XL4015 output to 5 V, then wire its output to the ESP32 5V pin. Common GND.
 5. On the rear wall of the base: mount the barrel jack (E11) and the SPDT switch (E6) in the 12 V line.
 6. Inside the drum:
    - glue the piezo (E4) into the horn throat (P5),
