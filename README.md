@@ -64,10 +64,10 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | 1 | Wide-band piezo tweeter, Ø50 mm | pick a unit that reproduces well past 25 kHz (e.g. **~1–45 kHz**), **not** one capped at 25 kHz; bonded in with hot-melt glue |
 | 1 | **12 V DC power adapter, ≥1–2 A** | powers the H-bridge at 12 V (high SPL) |
 | 1 | **12 V barrel-jack socket** (panel mount, 5.5 × 2.1 mm) | power input on the enclosure |
-| 1 | **DC-DC step-down (buck) converter — XL4015** | drops 12 V → 5 V for the ESP32 |
+| 1 | **DC-DC step-down (buck) converter — XL4015** | drops 12 V → 5 V for the ESP32, PIR, and L298N logic |
 | — | Hookup wire (AWG 28–30), heat-shrink | internal wiring harness |
 
-> The build is powered by **12 V via the barrel jack**. The 12 V feeds the L298N motor supply directly (for high SPL), while an **XL4015 buck converter steps 12 V down to 5 V** to power the ESP32 via its `5V` pin (set the XL4015 output trimmer to 5 V before connecting it). During flashing you can also just power the ESP32 over USB.
+> The build is powered by **12 V via the barrel jack**. The 12 V feeds the L298N motor supply (`Vs`) directly (for high SPL), while an **XL4015 buck converter steps 12 V down to 5 V**. That single 5 V rail powers the **ESP32 (`5V` pin), the PIR sensor (`VCC`), and the L298N logic (`+5V`)** — so the L298N's onboard 5 V regulator is not used (set the XL4015 output trimmer to 5 V before connecting anything). During flashing you can also power the ESP32 over USB.
 
 > **Note:** the power LED and on/off switch visible in the concept render are **not** part of the current enclosure design (no cutouts or mounts, and the firmware does not drive an LED). Power is switched at the 12 V adapter. Add your own panel cutouts if you want them.
 
@@ -124,7 +124,8 @@ Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infil
 | L298N `ENA` (+`ENB`) | **14** | shared H-bridge enable |
 | L298N `IN2`, `IN4` | — | **tie both to GND** (unused half-bridge inputs — must not float) |
 | Transducer | — | across L298N **OUT1 ↔ OUT3** |
-| Power | — | 12 V → L298N `Vs`; 12 V → XL4015 buck → 5 V → ESP32 `5V` |
+| 12 V rail | — | barrel jack → L298N `Vs` (motor supply) **and** → XL4015 buck input |
+| 5 V rail (XL4015 `OUT`) | — | → ESP32 `5V`, → PIR `VCC`, **and** → L298N `+5V` logic |
 
 The piezo is connected **between OUT1 and OUT3** (not to ground) — that is what gives the full H-bridge ±12 V swing. Only `IN1`/`IN3` are driven; the other two inputs `IN2` and `IN4` (which control the unused outputs OUT2/OUT4) must be **tied to GND** so they don't float and cause erratic switching.
 

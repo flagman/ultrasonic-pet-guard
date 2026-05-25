@@ -2,7 +2,7 @@
 
 Final prototype form: rectangular base + cylindrical drum head on a single tilt axis, concentric with the drum surface. An M8 bolt threading into a captured extended M8 nut clamps the tilt by friction. The cable runs through a hollow stub axle — it only rotates, it does not stretch.
 
-> **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**. The 12 V feeds the L298N H-bridge directly — this is what gives the high SPL — while an **XL4015 DC-DC step-down (buck) converter drops 12 V → 5 V** to power the ESP32. The earlier USB-C-5V-plus-step-*up* scheme described in older notes is *not* used in the shipped build.
+> **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**. The 12 V feeds the L298N H-bridge directly — this is what gives the high SPL — while an **XL4015 DC-DC step-down (buck) converter drops 12 V → 5 V** to power the ESP32, the PIR, and the L298N logic. The earlier USB-C-5V-plus-step-*up* scheme described in older notes is *not* used in the shipped build.
 
 ## Dimensions (updated v0.7.1)
 
@@ -78,12 +78,14 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 **Power (as-built, 12 V):**
 
 ```
-12 V adapter → barrel jack ─┬→ L298N Vs (12 V, drives the H-bridge / piezo)
-                            └→ XL4015 buck (12 V → 5 V) → ESP32 5V pin
+12 V adapter → barrel jack ─┬→ L298N Vs (12 V → H-bridge / piezo)
+                            └→ XL4015 buck (12 V → 5 V) ─┬→ ESP32 5V
+                                                          ├→ L298N +5V (logic)
+                                                          └→ PIR VCC
 common GND
 ```
 
-Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. The ESP32 is powered from the XL4015 buck converter (set its output trimmer to 5 V *before* wiring it to the ESP32). During flashing the ESP32 can also be powered over USB.
+Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. The **single 5 V rail from the XL4015 buck powers the ESP32 (`5V`), the L298N logic (`+5V`), and the PIR (`VCC`)** — the L298N's onboard 5 V regulator is not used. Set the XL4015 output trimmer to 5 V *before* wiring it to anything. During flashing the ESP32 can also be powered over USB.
 
 **L298N inputs.** Only `IN1` (GPIO 13) and `IN3` (GPIO 12) are driven; `ENA`+`ENB` are tied together to GPIO 14. The two unused inputs **`IN2` and `IN4` must be tied to GND** so they do not float (they control the unused outputs OUT2/OUT4). The piezo connects across **OUT1 ↔ OUT3**.
 
