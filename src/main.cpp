@@ -390,7 +390,10 @@ void playTone(uint32_t freqHz, int durationMs) {
 
   // ORDER MATTERS: mute the H-bridge first (outputs → HIGH-Z), and only then
   // stop the LEDC. Otherwise at duty=0 in1Pin sits LOW while in3Pin (inverted)
-  // sits HIGH → a DC level across the piezo → a loud click.
+  // sits HIGH → a sustained DC level across the piezo on shutdown.
+  // (The abrupt on/off transient at each burst edge is inherent to this
+  // rail-to-rail drive — there is no amplitude envelope — and is not addressed
+  // here; it's harmless for an ultrasonic burst.)
   digitalWrite(enaPin, LOW);
   ledcWrite(ledcChannel, 0);
 }
