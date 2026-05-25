@@ -32,7 +32,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 - **NTP-synced schedule** (e.g. 21:00 → 07:00, may cross midnight), stored in NVS so it survives reboots.
 - **Fail-safe:** if WiFi/NTP is unavailable, the device runs 24/7 instead of going dark.
 - JSON status endpoint at `/api/status`.
-- Tilting "drum head" on a friction thumbscrew so you can aim it precisely.
+- Tilting "drum head" on a friction-clamped M8 pivot bolt so you can aim it precisely.
 
 ## Repository layout
 
@@ -79,7 +79,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | `top-plate.3mf` | top plate / head module with yokes |
 | `drum-left.3mf`, `drum-right.3mf` | drum-head halves |
 | `front-panel.3mf` | front insert / chord face (PIR, transducer, LED cutouts) |
-| `bolt-holder.3mf` | tilt thumbscrew / axle holder |
+| `bolt-holder.3mf` | tilt pivot / captured M8-nut holder |
 
 Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infill. Full per-part slicer settings are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
 
@@ -87,11 +87,11 @@ Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infil
 
 | Qty | Part | Notes |
 |---|---|---|
-| several | **M3 heat-set brass inserts** | drum axle ends + **top-plate/lid mounting** |
-| 1 | M3 × 16 knurled thumbscrew | friction tilt clamp |
+| 2 | **M8 bolt** | tilt pivot — one through each yoke |
+| 1 | **M8 extended (coupling) nut** | captured in one drum end; the M8 tilt bolt threads into it to clamp the tilt by friction (the other drum end is a plain Ø8 hole) |
+| 4 | **M3 heat-set brass inserts** | top-plate / lid mounting |
 | 4 | M3 screws | transducer to chord face |
 | 4–6 | **Ø1.75 mm self-tapping plastic screws** | mounting the PCBs (ESP32 / L298N) |
-| 2 | M3 nylon washers | yoke ↔ drum |
 | 1 | cable grommet Ø5–6 mm | harness pass-through |
 | 4 | self-adhesive rubber feet | base |
 

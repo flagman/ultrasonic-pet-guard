@@ -1,6 +1,6 @@
 # Ultrasonic Pet Guard — v0.7 Hardware Specification
 
-Final prototype form: rectangular base + cylindrical drum head on a single tilt axis, concentric with the drum surface. A single clamping thumbscrew locks the tilt by friction. The cable runs through a hollow stub axle — it only rotates, it does not stretch.
+Final prototype form: rectangular base + cylindrical drum head on a single tilt axis, concentric with the drum surface. An M8 bolt threading into a captured extended M8 nut clamps the tilt by friction. The cable runs through a hollow stub axle — it only rotates, it does not stretch.
 
 > **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**. The 12 V feeds the L298N H-bridge directly — this is what gives the high SPL — while an **XL4015 DC-DC step-down (buck) converter drops 12 V → 5 V** to power the ESP32. The earlier USB-C-5V-plus-step-*up* scheme described in older notes is *not* used in the shipped build.
 
@@ -36,17 +36,14 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 
 | # | Part | Specification | Qty | Where |
 |---|---|---|---|---|
-| **H1** | Knurled M3×16 thumbscrew | knob Ø~12 mm, knurled | 1 | Tilt clamp through the left yoke |
+| **H1** | M8 bolt | tilt pivot axle | 2 | One through each yoke into the drum |
+| **H2** | M8 extended (coupling) nut | long nut | 1 | Captured in one drum end face; the M8 tilt bolt threads into it to clamp the tilt. The opposite drum end is a plain Ø8 through-hole (no thread). |
 | **H1a** *(opt.)* | M3×24 countersunk screws | for mounting the speaker + horn | 4 (instead of 4× M3×16) | If the optional P5 horn is fitted — longer screws than standard are required |
-| **H2** | M3×16 axle screw, hex socket | countersunk | 1 | Fixed axle through the right yoke |
-| **H3** | M3×5 brass heat-set insert | pressed in with a soldering iron | 2 | In each axial end face of the drum |
 | **H4** | M2.5×6 countersunk screw | DIN 7991, stainless | 4 | Bottom cover ↔ base |
 | **H5** | **Ø1.75 mm self-tapping plastic screws** | small plastic/wood screws | 4–6 | ESP32 and L298N driven directly into the printed standoffs |
 | **H6** | **M3 brass heat-set insert** | for the lid/top-plate | 4 | In the base, for fastening the top plate/cover |
 | **H7** | Rubber foot Ø6×3 mm | self-adhesive, grey | 4 | Corners of the bottom cover |
-| **H8** | Silicone O-ring Ø3×1 mm | black | 1 *(opt.)* | Under the thumbscrew — springs the friction |
 | **H9** | Cable grommet Ø5 mm | silicone/rubber | 1 | Cable entry into the hollow axle |
-| **H10** | M3 nylon washer (3/6/0.5) | black | 2 | Between yoke ↔ drum on each side |
 
 ---
 
@@ -125,53 +122,50 @@ top view (section along the axis):
 
    ┌───────┐  ┌──────────────────────────────┐  ┌───────┐
    │       │  │                              │  │       │
-   │  M3   │  │      drum head Ø50           │  │  M3   │
-   │ thumb ├══╪══◀ M3 brass insert (L)       │  │ pivot │
-   │ screw │  │  wall      wall    insert ▶  ╪══╡ screw │
-   │       │  │                              │  │ socket│
+   │  M8   │  │      drum head Ø50           │  │  M8   │
+   │ bolt  ├══╪══▶ extended M8 nut (captured)│  │ bolt  │
+   │       │  │                         hole▶╪══╡(Ø8    │
+   │       │  │                              │  │ hole) │
    └───────┘  └──────────────────────────────┘  └───────┘
-       ▲      ▲                                ▲      ▲
-       │      │                                │      │
-       │   M3 nylon washer           M3 nylon washer
-       │   Ø3/6/0.5                  Ø3/6/0.5
-       │                                                ▲
-   LEFT yoke                                        RIGHT yoke
-   (clamping)                                       (supporting)
+       ▲                                            ▲
+       │                                            │
+   LEFT yoke                                     RIGHT yoke
+   (clamp: bolt → captured extended M8 nut)      (plain Ø8 pivot hole)
 ```
 
 ### 4.3 How the lock works
 
-1. The **M3×16** thumbscrew passes through the hole in the left yoke, the nylon washer, and threads into the **M3 brass insert** in the left end face of the drum.
-2. Mirrored on the right: the M3×16 axle screw is not used for clamping, it only retains the second axle.
-3. As the thumbscrew is tightened it **pulls the drum to the left** → the normal force presses the drum's end face against the nylon washer and the yoke → static friction develops.
-4. **Friction force × friction radius = holding torque**, which exceeds the head's gravitational torque hundreds of times over.
+1. On the clamping side, an **M8 bolt** passes through the yoke and threads into an **extended (coupling) M8 nut captured in that end face of the drum**.
+2. The opposite side is just a **plain Ø8 through-hole**: an M8 bolt passes through it as a plain pivot (no thread).
+3. As the M8 bolt is tightened it **pulls the drum against the yoke** → the normal force presses the drum's end face against the yoke face → static friction develops.
+4. **Friction force × friction radius = holding torque**, which far exceeds the head's gravitational torque, so the head holds whatever tilt angle you set.
 
 ### 4.4 Holding-torque estimate (order of magnitude)
 
 | Parameter | Value |
 |---|---|
-| Hand-tightening effort on the thumbscrew | ~0.3 N·m of torque |
-| Resulting axial force (via the M3 thread) | ~300 N |
-| PETG–nylon friction coefficient | μ ≈ 0.3 |
+| Tightening torque on the M8 bolt (hex key) | ~1.5 N·m |
+| Resulting axial force (via the M8 thread) | ~900 N |
+| PETG–metal/PETG friction coefficient | μ ≈ 0.35 |
 | Effective contact radius | ~15 mm |
-| **Holding torque** | ≈ **1.35 N·m** |
+| **Holding torque** | ≈ **4.7 N·m** |
 | | |
 | Head mass | ~80 g |
-| CoG offset from the axis | ~5 mm (horn + PIR shift it forward) |
+| CoG offset from the axis | ~5 mm (PIR + transducer shift it forward) |
 | **Gravitational torque at maximum** | ≈ **0.004 N·m** |
 
-**Margin: ~330×.** The head will not slip even with the thumbscrew barely tightened.
+**Margin: huge (~1000×).** The head will not slip even with the M8 bolt only lightly tightened.
 
 ### 4.5 Usage scenario
 
 ```
-   1. loosen the thumbscrew 1–2 turns ↺   (no tools, by hand)
+   1. loosen the M8 bolt 1–2 turns ↺   (hex key / spanner)
                   │
                   ▼
    2. turn the head by hand to the desired angle
                   │
                   ▼
-   3. hand-tighten the thumbscrew until snug ↻
+   3. tighten the M8 bolt until snug ↻
                   │
                   ▼
    4. done — the position holds until the next adjustment
@@ -212,7 +206,7 @@ If tactile feedback at fixed angles is wanted:
 
 - Steel ball Ø3 mm + a spring in a socket on the side face of the drum.
 - Ø3 mm dimples on the inner face of the left yoke, arranged along arcs at 0°, ±15°, ±30°, ±45°.
-- The thumbscrew still provides the final lock.
+- The M8 bolt still provides the final lock.
 
 For the first prototype this can be skipped. The friction clamp is sufficient.
 
@@ -221,7 +215,7 @@ For the first prototype this can be skipped. The friction clamp is sufficient.
 ## 5. Assembly sequence (brief)
 
 1. Print P1–P5 (P6, P7 — optional).
-2. Heat-set the brass inserts (H3 × 2 in the drum; H6 × 4 in the base for the top-plate/lid screws).
+2. Heat-set the H6 × 4 brass inserts in the base (for the top-plate/lid screws), and capture the extended M8 nut (H2) in one end face of the drum.
 3. Inside the base, mount the ESP32 (E1, rear-left), the L298N (E2, front-center), and the XL4015 buck (E12) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
 4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V), and a branch to the XL4015 buck (E12) input. Set the XL4015 output to 5 V, then wire its output to the ESP32 5V pin. Common GND.
 5. On the rear wall of the base: mount the barrel jack (E11) and the SPDT switch (E6) in the 12 V line.
@@ -230,7 +224,7 @@ For the first prototype this can be skipped. The friction clamp is sufficient.
    - screw down the PIR board (E3) behind the dome (4 M2 screws onto h=2 mm standoffs),
    - mount the LED (E5) behind the light pipe.
 7. Connect the drum and base with the 7-conductor harness (E10) through the drum's hollow stub axle and the grommet (H9) in the top face of the base.
-8. Set the drum into the yokes; insert the axle screw (H2) on the right and the thumbscrew (H1) on the left with the nylon washers (H10).
+8. Set the drum into the yokes. On the plain-hole side, pass an M8 bolt (H1) through the yoke and the Ø8 drum hole as a plain pivot. On the clamp side, thread an M8 bolt (H1) through the yoke into the captured extended M8 nut (H2) and tighten to set the tilt friction.
 9. Screw on the bottom cover (P2) with M2.5 screws (H4); stick on the feet (H7).
 
 **Assembly time for an experienced builder: ~25 minutes.**
