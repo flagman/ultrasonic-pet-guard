@@ -89,7 +89,7 @@ Print in **PETG**, 0.2 mm layers, 100 % infill. Print settings and the part list
 |---|---|---|
 | 2 | **M8 bolt** | tilt pivot — one through each yoke |
 | 1 | **M8 extended (coupling) nut** | captured in one drum end; the M8 tilt bolt threads into it to clamp the tilt by friction (the other drum end is a plain Ø8 hole) |
-| 4 | **M3 heat-set brass inserts** | top-plate / lid mounting |
+| 1 | **M3 heat-set brass insert** | holds the top-plate |
 | 6–8 | **Ø1.75 mm self-tapping plastic screws** | mounting the PCBs (ESP32 / L298N / XL4015) |
 | 1 | cable grommet Ø5–6 mm | harness pass-through |
 | 4 | self-adhesive rubber feet | base |

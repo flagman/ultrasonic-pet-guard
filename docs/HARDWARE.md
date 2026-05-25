@@ -24,7 +24,7 @@ the CAD (`hardware/cad/`) and the print files (`hardware/print/`).
 |---|---|---|
 | M8 bolt | 2 | tilt pivot (one per yoke) |
 | M8 extended (coupling) nut | 1 | captured in one drum end; the M8 bolt threads into it (other end is a plain Ø8 hole) |
-| M3 heat-set brass insert | 4 | top-plate / lid mounting |
+| M3 heat-set brass insert | 1 | holds the top-plate |
 | M2.5 × 6 countersunk screw | 4 | bottom cover ↔ base |
 | Ø1.75 mm self-tapping screws | 6–8 | ESP32, L298N, XL4015 into the printed standoffs |
 | Cable grommet Ø5 mm | 1 | harness pass-through |
@@ -68,7 +68,7 @@ Set the XL4015 output trimmer to 5 V before wiring it to anything. The L298N's o
 ## Assembly notes
 
 - The ESP32 is mounted **upside down** in the base (board flipped onto its standoffs).
-- Heat-set the 4 × M3 inserts into the base for the top-plate; capture the extended M8 nut in one drum end.
+- Heat-set the single M3 insert into the base that holds the top-plate; capture the extended M8 nut in one drum end.
 - Hot-glue the PIR and the tweeter into the drum; superglue the two drum halves and the front panel.
 - Route the harness out through the drum's hollow stub axle and the base grommet before closing up.
 - Mount the drum on the two M8 bolts; tighten the bolt on the captured-nut side to set the tilt friction.
