@@ -86,6 +86,8 @@ common GND
 
 Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. The ESP32 is powered from the XL4015 buck converter (set its output trimmer to 5 V *before* wiring it to the ESP32). During flashing the ESP32 can also be powered over USB.
 
+**L298N inputs.** Only `IN1` (GPIO 13) and `IN3` (GPIO 12) are driven; `ENA`+`ENB` are tied together to GPIO 14. The two unused inputs **`IN2` and `IN4` must be tied to GND** so they do not float (they control the unused outputs OUT2/OUT4). The piezo connects across **OUT1 ↔ OUT3**.
+
 ---
 
 ## 4. Tilt mechanism

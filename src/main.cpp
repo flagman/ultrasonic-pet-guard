@@ -27,6 +27,8 @@ const int pirPin = 27;    // AM312 motion sensor
 const int in1Pin = 13;   // L298N IN1 — LEDC, non-inverted
 const int in3Pin = 12;   // L298N IN3 — LEDC, inverted (full H-bridge between OUT1 and OUT3)
 const int enaPin = 14;    // L298N ENA + ENB (tied together on the module) — shared enable
+// NOTE: L298N IN2 and IN4 (the unused half-bridge inputs driving OUT2/OUT4) are
+// tied to GND in hardware so they don't float. They are not driven by the ESP32.
 
 // LEDC: ESP32 hardware PWM (generates the square wave itself, no jitter from FreeRTOS)
 const int ledcChannel = 0;

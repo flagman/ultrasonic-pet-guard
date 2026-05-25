@@ -121,10 +121,11 @@ Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infil
 | L298N `IN1` | **13** | H-bridge input (non-inverted PWM) |
 | L298N `IN3` | **12** | H-bridge input (inverted PWM, via GPIO matrix) |
 | L298N `ENA` (+`ENB`) | **14** | shared H-bridge enable |
+| L298N `IN2`, `IN4` | — | **tie both to GND** (unused half-bridge inputs — must not float) |
 | Transducer | — | across L298N **OUT1 ↔ OUT3** |
 | Power | — | 12 V → L298N `Vs`; 12 V → XL4015 buck → 5 V → ESP32 `5V` |
 
-The piezo is connected **between OUT1 and OUT3** (not to ground) — that is what gives the full H-bridge ±12 V swing.
+The piezo is connected **between OUT1 and OUT3** (not to ground) — that is what gives the full H-bridge ±12 V swing. Only `IN1`/`IN3` are driven; the other two inputs `IN2` and `IN4` (which control the unused outputs OUT2/OUT4) must be **tied to GND** so they don't float and cause erratic switching.
 
 ## Using it
 
