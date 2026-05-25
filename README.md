@@ -65,7 +65,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | 1 | **12 V DC power adapter, ≥1–2 A** | powers the H-bridge at 12 V (high SPL) |
 | 1 | **12 V barrel-jack socket** (panel mount, 5.5 × 2.1 mm) | power input on the enclosure |
 | 1 | **DC-DC step-down (buck) converter — XL4015** | drops 12 V → 5 V for the ESP32, PIR, and L298N logic |
-| — | Hookup wire (AWG 28–30), heat-shrink | internal wiring harness |
+| ~3 m | Hookup wire (AWG 28–30) + heat-shrink | internal wiring harness |
 
 > The build is powered by **12 V via the barrel jack**. The 12 V feeds the L298N motor supply (`Vs`) directly (for high SPL), while an **XL4015 buck converter steps 12 V down to 5 V**. That single 5 V rail powers the **ESP32 (`5V` pin), the PIR sensor (`VCC`), and the L298N logic (`+5V`)** — so the L298N's onboard 5 V regulator is not used (set the XL4015 output trimmer to 5 V before connecting anything). During flashing you can also power the ESP32 over USB.
 
@@ -90,7 +90,7 @@ Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infil
 | 2 | **M8 bolt** | tilt pivot — one through each yoke |
 | 1 | **M8 extended (coupling) nut** | captured in one drum end; the M8 tilt bolt threads into it to clamp the tilt by friction (the other drum end is a plain Ø8 hole) |
 | 4 | **M3 heat-set brass inserts** | top-plate / lid mounting |
-| 4–6 | **Ø1.75 mm self-tapping plastic screws** | mounting the PCBs (ESP32 / L298N) |
+| 6–8 | **Ø1.75 mm self-tapping plastic screws** | mounting the PCBs (ESP32 / L298N / XL4015) |
 | 1 | cable grommet Ø5–6 mm | harness pass-through |
 | 4 | self-adhesive rubber feet | base |
 | — | **Hot-melt glue** | bonding the PIR sensor + tweeter inside the drum |

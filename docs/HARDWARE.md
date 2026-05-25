@@ -24,11 +24,10 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 | **P2** | Base bottom cover | PETG light grey | flat | 0.2 mm | 25% gyroid | 3 | With keyhole slots for wall mounting |
 | **P3** | Drum head | PETG light grey | flat on one Ø50 end face | **0.16 mm** | 30% gyroid | 4 | Printed in two halves (drum-left/right) bonded with superglue (CA); hollow inside; right stub axle is hollow (Ø5) for the cable |
 | **P4** | Front insert (chord/flat face) | PETG dark grey | flat | 0.16 mm | 20% | 3 | Openings for the PIR dome and transducer; superglued (CA) to the drum |
-| **P5** *(opt., v0.7.3)* | Waveguide horn | PETG light grey | mouth down on the bed, no supports | 0.16 mm | 15% | 4 (2.5 mm wall) | Conical flare 50→70 mm, L=30, 80×2 mm flange with 4 M3 holes on PCD 52. Gives +3–4 dB on-axis. |
 | ~~**P6**~~ | ~~Protective grille~~ | **excluded** | – | – | – | – | The off-the-shelf speaker has its own protection |
 | **P7** *(opt.)* | Tilt limiters | PETG | – | – | solid | – | 2×3 mm micro-stops on the yoke to block at ±60° |
 
-**Total: 6 mandatory STLs + 1 optional.**
+**Total: 6 mandatory printed parts; P7 (tilt limiters) optional.**
 
 ---
 
@@ -39,7 +38,7 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 | **H1** | M8 bolt | tilt pivot axle | 2 | One through each yoke into the drum |
 | **H2** | M8 extended (coupling) nut | long nut | 1 | Captured in one drum end face; the M8 tilt bolt threads into it to clamp the tilt. The opposite drum end is a plain Ø8 through-hole (no thread). |
 | **H4** | M2.5×6 countersunk screw | DIN 7991, stainless | 4 | Bottom cover ↔ base |
-| **H5** | **Ø1.75 mm self-tapping plastic screws** | small plastic/wood screws | 4–6 | ESP32 and L298N driven directly into the printed standoffs |
+| **H5** | **Ø1.75 mm self-tapping plastic screws** | small plastic/wood screws | 6–8 | ESP32, L298N, and the XL4015 buck driven directly into the printed standoffs |
 | **H6** | **M3 brass heat-set insert** | for the lid/top-plate | 4 | In the base, for fastening the top plate/cover |
 | **H7** | Rubber foot Ø6×3 mm | self-adhesive, grey | 4 | Corners of the bottom cover |
 | **H9** | Cable grommet Ø5 mm | silicone/rubber | 1 | Cable entry into the hollow axle |
@@ -57,7 +56,7 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 | ~~**E5**~~ | ~~LED indicator (3 mm + 220 Ω)~~ | **not designed in** — concept render only; firmware does not drive an LED | – | – | (no light-pipe cutout in the current enclosure) |
 | ~~**E6**~~ | ~~SPDT switch~~ | **not designed in** — concept render only; switch power at the 12 V adapter | – | – | (no switch cutout in the current enclosure) |
 | **E7** | **12 V DC adapter** | **≥ 1–2 A**, 5.5 × 2.1 mm barrel plug | – | 1 | External power supply |
-| **E8** | Silicone wire | AWG28–30, colored | – | ~1 m | Internal wiring |
+| **E8** | Silicone wire | AWG28–30, colored | – | ~3 m | Internal wiring |
 | **E9** | Heat-shrink tubing | 2 mm + 3 mm | – | 30 cm each | On the harness |
 | **E10** | Through-axle harness | 7 conductors, overall Ø ~4 mm | – | 12 cm | Hollow axle → base |
 | **E11** | **12 V barrel-jack socket** | panel-mount, 5.5 × 2.1 mm | – | 1 | Rear wall of the base (power input) |
@@ -99,7 +98,7 @@ Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its hig
 side profile head and base:
 
                   flat chord:
-                  PIR ● horn ⊃           "ULTRASONIC PET GUARD v0.7"
+                  PIR ● transducer ◉     "ULTRASONIC PET GUARD v0.7"
               ┌────────────────────────┐
             ╱                            ╲
            ╱                              ╲
@@ -217,7 +216,7 @@ For the first prototype this can be skipped. The friction clamp is sufficient.
 
 ## 5. Assembly sequence (brief)
 
-1. Print P1–P5 (P6, P7 — optional).
+1. Print P1–P4 (P7 — optional).
 2. Heat-set the H6 × 4 brass inserts in the base (for the top-plate/lid screws), and capture the extended M8 nut (H2) in one end face of the drum.
 3. Inside the base, mount the ESP32 (E1, rear-left), the L298N (E2, front-center), and the XL4015 buck (E12) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
 4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V), and a branch to the XL4015 buck (E12) input. Set the XL4015 output to 5 V, then wire its output to the ESP32 5V pin. Common GND.
