@@ -4,9 +4,9 @@ An open-source, 3D-printed **ultrasonic deterrent for dogs and cats**, built aro
 
 It is deliberately *loud*. The ESP32 drives the ultrasonic transducer through an L298N in a **full H-bridge** off a **12 V** supply, which is what makes the burst strong enough that a dog will actually break off and leave the zone rather than just twitch an ear.
 
-| Real device | Concept render | With optional acoustic horn |
-|---|---|---|
-| ![Real 3D-printed device](docs/images/device-real.jpg) | ![Studio concept render](docs/images/render-concept.jpg) | ![Render with horn](docs/images/render-horn.png) |
+| Real device | Concept render |
+|---|---|
+| ![Real 3D-printed device](docs/images/device-real.jpg) | ![Studio concept render](docs/images/render-concept.jpg) |
 
 > ⚠️ **Use responsibly.** This is an aversive device. It is meant to keep a pet out of a specific spot, not to punish or harm. Only run it on the active-hours schedule, point it at the zone (not at where the animal rests/sleeps), and dial back the burst if your pet is simply distressed rather than redirected. Do not aim it at people or use it where it could affect other animals you don't intend to.
 
@@ -131,10 +131,6 @@ The piezo is connected **between OUT1 and OUT3** (not to ground) — that is wha
 - Open **`http://pet-guard.local/`** (or the IP printed on the serial log) from any phone/laptop on the same network.
 - Set the **active window** (default 21:00 → 07:00; it may cross midnight), toggle **Enabled**, and **Save** — the schedule is stored on the device.
 - Hit **Test (fire burst now)** to verify the transducer. You won't hear the 25 kHz tone; confirm it with a spectrum-analyzer phone app, or just watch the pet's reaction.
-
-## Optional upgrade: acoustic horn
-
-The third image shows an optional printed conical waveguide over the transducer (+3–4 dB on-axis and a tighter ~50° beam). It's not required — the device works without it. Details and geometry are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
 
 ## License
 
