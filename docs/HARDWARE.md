@@ -27,7 +27,7 @@ the CAD (`hardware/cad/`) and the print files (`hardware/print/`).
 | M3 heat-set brass insert | 1 | holds the top-plate |
 | M2.5 × 6 countersunk screw | 4 | bottom cover ↔ base |
 | Ø1.75 mm self-tapping screws | 6–8 | ESP32, L298N, XL4015 into the printed standoffs |
-| Cable grommet Ø5 mm | 1 | harness pass-through |
+| Cable grommet Ø10 mm | 1 | base↔drum harness pass-through |
 | Rubber feet | 4 | base |
 | Hot-melt glue | — | PIR + tweeter into the front panel |
 | Superglue (CA) | — | drum halves + front panel |
