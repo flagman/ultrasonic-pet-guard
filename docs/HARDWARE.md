@@ -67,6 +67,7 @@ Set the XL4015 output trimmer to 5 V before wiring it to anything. The L298N's o
 
 ## Assembly notes
 
+- The ESP32 is mounted **upside down** in the base (board flipped onto its standoffs).
 - Heat-set the 4 × M3 inserts into the base for the top-plate; capture the extended M8 nut in one drum end.
 - Hot-glue the PIR and the tweeter into the drum; superglue the two drum halves and the front panel.
 - Route the harness out through the drum's hollow stub axle and the base grommet before closing up.
