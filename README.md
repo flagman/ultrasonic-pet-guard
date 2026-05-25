@@ -81,7 +81,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the parts list (BOM), wiring, and
 | `front-panel.3mf` | front insert / chord face (PIR + transducer cutouts) |
 | `bolt-holder.3mf` | tilt pivot / captured M8-nut holder |
 
-Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infill. Print settings and the part list are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
+Print in **PETG**, 0.2 mm layers, 100 % infill. Print settings and the part list are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
 
 ### Fasteners & hardware
 

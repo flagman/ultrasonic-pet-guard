@@ -61,10 +61,9 @@ Set the XL4015 output trimmer to 5 V before wiring it to anything. The L298N's o
 ## Printing
 
 - FDM, 0.4 mm nozzle, **PETG**.
-- Layers: 0.2 mm for the base/top-plate, 0.16 mm for the drum halves and front panel.
-- Infill: 25–30 % gyroid.
+- Layers: **0.2 mm** (all parts).
+- Infill: **100 %**.
 - Print files (`hardware/print/`): `body`, `top-plate`, `drum-left`, `drum-right`, `front-panel`, `bolt-holder`.
-- Total: ~12–14 h, ~80–100 g PETG.
 
 ## Assembly notes
 
