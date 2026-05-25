@@ -22,8 +22,8 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 |---|---|---|---|---|---|---|---|
 | **P1** | Base housing (lower box) | PETG light grey (RAL 7035) | flat on the rear face, openings up | 0.2 mm | 25% gyroid | 3 | Printed with integrated yokes |
 | **P2** | Base bottom cover | PETG light grey | flat | 0.2 mm | 25% gyroid | 3 | With keyhole slots for wall mounting |
-| **P3** | Drum head | PETG light grey | flat on one Ø50 end face | **0.16 mm** | 30% gyroid | 4 | Hollow inside; right stub axle is hollow (Ø5) for the cable |
-| **P4** | Front insert (chord/flat face) | PETG dark grey | flat | 0.16 mm | 20% | 3 | Openings for the PIR dome and horn throat |
+| **P3** | Drum head | PETG light grey | flat on one Ø50 end face | **0.16 mm** | 30% gyroid | 4 | Printed in two halves (drum-left/right) bonded with superglue (CA); hollow inside; right stub axle is hollow (Ø5) for the cable |
+| **P4** | Front insert (chord/flat face) | PETG dark grey | flat | 0.16 mm | 20% | 3 | Openings for the PIR dome and transducer; superglued (CA) to the drum |
 | **P5** *(opt., v0.7.3)* | Waveguide horn | PETG light grey | mouth down on the bed, no supports | 0.16 mm | 15% | 4 (2.5 mm wall) | Conical flare 50→70 mm, L=30, 80×2 mm flange with 4 M3 holes on PCD 52. Gives +3–4 dB on-axis. |
 | ~~**P6**~~ | ~~Protective grille~~ | **excluded** | – | – | – | – | The off-the-shelf speaker has its own protection |
 | **P7** *(opt.)* | Tilt limiters | PETG | – | – | solid | – | 2×3 mm micro-stops on the yoke to block at ±60° |
@@ -38,7 +38,6 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 |---|---|---|---|---|
 | **H1** | M8 bolt | tilt pivot axle | 2 | One through each yoke into the drum |
 | **H2** | M8 extended (coupling) nut | long nut | 1 | Captured in one drum end face; the M8 tilt bolt threads into it to clamp the tilt. The opposite drum end is a plain Ø8 through-hole (no thread). |
-| **H1a** *(opt.)* | M3×24 countersunk screws | for mounting the speaker + horn | 4 (instead of 4× M3×16) | If the optional P5 horn is fitted — longer screws than standard are required |
 | **H4** | M2.5×6 countersunk screw | DIN 7991, stainless | 4 | Bottom cover ↔ base |
 | **H5** | **Ø1.75 mm self-tapping plastic screws** | small plastic/wood screws | 4–6 | ESP32 and L298N driven directly into the printed standoffs |
 | **H6** | **M3 brass heat-set insert** | for the lid/top-plate | 4 | In the base, for fastening the top plate/cover |
@@ -54,7 +53,7 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 | **E1** | ESP32 DevKit | ESP32-WROOM-32, USB-C | **52 × 28.68 × h10** (53.23 with USB-C) | 1 | Rear-left in the base, USB-C toward the rear wall |
 | **E2** | L298N | module with heatsink | **43.5 × 43.5 × h26** (with heatsink!) | 1 | Front-center in the base |
 | **E3** | PIR sensor | AM312 (3-pin: VCC/GND/OUT) | **dome Ø13.4, PCB 19.2 long, pins 9** | 1 | Behind the PIR dome in the drum |
-| **E4** | **Wide-band piezo tweeter** | **Ø50.1 × h18; wide-band ~1–45 kHz (reproduces 25 kHz well — NOT a unit capped at 25 kHz); 4 mounting holes Ø3.2 on PCD 52** | **Ø50.1 × 18** | 1 | Recessed into the drum's chord/flat face, fastened with 4 M3 screws into brass heat-set inserts |
+| **E4** | **Wide-band piezo tweeter** | **Ø50.1 × h18; wide-band ~1–45 kHz (reproduces 25 kHz well — NOT a unit capped at 25 kHz)** | **Ø50.1 × 18** | 1 | Recessed into the drum's chord/flat face, bonded with hot-melt glue |
 | ~~**E5**~~ | ~~LED indicator (3 mm + 220 Ω)~~ | **not designed in** — concept render only; firmware does not drive an LED | – | – | (no light-pipe cutout in the current enclosure) |
 | ~~**E6**~~ | ~~SPDT switch~~ | **not designed in** — concept render only; switch power at the 12 V adapter | – | – | (no switch cutout in the current enclosure) |
 | **E7** | **12 V DC adapter** | **≥ 1–2 A**, 5.5 × 2.1 mm barrel plug | – | 1 | External power supply |
@@ -221,10 +220,8 @@ For the first prototype this can be skipped. The friction clamp is sufficient.
 3. Inside the base, mount the ESP32 (E1, rear-left), the L298N (E2, front-center), and the XL4015 buck (E12) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
 4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V), and a branch to the XL4015 buck (E12) input. Set the XL4015 output to 5 V, then wire its output to the ESP32 5V pin. Common GND.
 5. On the rear wall of the base: mount the barrel jack (E11) in the 12 V line. (The on/off switch shown in the concept render is not in the current design — switch power at the adapter instead.)
-6. Inside the drum:
-   - glue the piezo (E4) into the horn throat (P5),
-   - screw down the PIR board (E3) behind the dome (4 M2 screws onto h=2 mm standoffs).
-7. Connect the drum and base with the 7-conductor harness (E10) through the drum's hollow stub axle and the grommet (H9) in the top face of the base.
+6. Inside the drum head, bond the tweeter (E4) into the chord/flat face and the PIR board (E3) behind its dome — **both with hot-melt glue** (no screws or inserts).
+7. Route the 7-conductor harness (E10) out through the drum's hollow stub axle, then close up the drum: join the two drum halves (drum-left/right) and bond the front panel (P4) with **superglue (CA)**. Feed the harness through the grommet (H9) in the top face of the base.
 8. Set the drum into the yokes. On the plain-hole side, pass an M8 bolt (H1) through the yoke and the Ø8 drum hole as a plain pivot. On the clamp side, thread an M8 bolt (H1) through the yoke into the captured extended M8 nut (H2) and tighten to set the tilt friction.
 9. Screw on the bottom cover (P2) with M2.5 screws (H4); stick on the feet (H7).
 
