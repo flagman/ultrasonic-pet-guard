@@ -93,7 +93,7 @@ Print in **PETG**, 0.2 mm layers, 100 % infill. Print settings and the part list
 | 6–8 | **Ø1.75 mm self-tapping plastic screws** | mounting the PCBs (ESP32 / L298N / XL4015) |
 | 1 | cable grommet Ø5–6 mm | harness pass-through |
 | 4 | self-adhesive rubber feet | base |
-| — | **Hot-melt glue** | bonding the PIR sensor + tweeter inside the drum |
+| — | **Hot-melt glue** | bonding the PIR sensor + tweeter into the front panel |
 | — | **Superglue (CA)** | joining the two drum halves + the front panel |
 
 ## Firmware: build & flash (PlatformIO)
