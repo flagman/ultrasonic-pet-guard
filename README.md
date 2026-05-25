@@ -23,7 +23,7 @@ Several design choices stack up to make the output far stronger than a typical A
 - **Pulsed burst, not a steady tone.** 10 pulses of 300 ms with 150 ms gaps. The on/off pattern triggers a startle response and prevents the animal from habituating the way it would to a continuous tone.
 - **Dedicated ultrasonic piezo transducer**, well sealed in the enclosure and aimed outward, so the energy goes into the room instead of leaking back inside the case.
 
-See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, dimensions, and assembly notes.
+See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the parts list (BOM), wiring, and print settings.
 
 ## Features
 
@@ -47,7 +47,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 │   ├── cad/                     Fusion 360 STEP export
 │   └── print/                   ready-to-slice 3MF parts
 ├── docs/
-│   ├── HARDWARE.md              full hardware spec + BOM + assembly
+│   ├── HARDWARE.md              BOM, wiring, and print settings
 │   └── images/                  photos & renders
 └── README.md
 ```
@@ -81,7 +81,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | `front-panel.3mf` | front insert / chord face (PIR + transducer cutouts) |
 | `bolt-holder.3mf` | tilt pivot / captured M8-nut holder |
 
-Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infill. Full per-part slicer settings are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
+Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infill. Print settings and the part list are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
 
 ### Fasteners & hardware
 

@@ -1,80 +1,52 @@
-# Ultrasonic Pet Guard — v0.7 Hardware Specification
+# Ultrasonic Pet Guard — Hardware
 
-Final prototype form: rectangular base + cylindrical drum head on a single tilt axis, concentric with the drum surface. An M8 bolt threading into a captured extended M8 nut clamps the tilt by friction. The cable runs through a hollow stub axle — it only rotates, it does not stretch.
+Parts list, wiring, and print settings. The geometry and assembly are defined by
+the CAD (`hardware/cad/`) and the print files (`hardware/print/`).
 
-> **Power note (as-built).** The built device is powered by a **12 V DC adapter (≥1–2 A) through a panel-mount barrel jack**. The 12 V feeds the L298N H-bridge directly — this is what gives the high SPL — while an **XL4015 DC-DC step-down (buck) converter drops 12 V → 5 V** to power the ESP32, the PIR, and the L298N logic. The earlier USB-C-5V-plus-step-*up* scheme described in older notes is *not* used in the shipped build.
+## Electronics
 
-## Dimensions (updated v0.7.1)
-
-| Part | Dimensions |
+| Component | Key spec |
 |---|---|
-| Base (outer) | **120 × 85 × 50 mm** |
-| Base (inner) | **115 × 80 × 44.5 mm** |
-| Drum head | **Ø 65 × 85 mm** *(enlarged for the Ø50 speaker)* |
-| Yoke | 8 × **45 mm** (height above the top of the base), spacing between yokes **86 mm** |
-| Pivot axis from top of base | **38 mm** |
+| ESP32 DevKit | ESP32-WROOM-32, USB-C (~52 × 28.7 mm) |
+| L298N dual H-bridge module | with heatsink (~43.5 × 43.5 × 26 mm) |
+| AM312 PIR sensor | 3-pin (VCC / GND / OUT), dome Ø13.4 mm |
+| Wide-band piezo tweeter | Ø50 × 18 mm, ~1–45 kHz (must reproduce 25 kHz well — **not** a unit capped at 25 kHz) |
+| 12 V DC adapter | ≥ 1–2 A, 5.5 × 2.1 mm barrel plug |
+| 12 V barrel-jack socket | panel-mount, 5.5 × 2.1 mm |
+| XL4015 DC-DC buck | 12 V → 5 V step-down |
+| Silicone hookup wire + heat-shrink | AWG 28–30, ~3 m |
 
----
+> The LED and on/off switch shown in the concept render are **not** in the current enclosure design (no cutouts; firmware drives no LED). Power is switched at the adapter.
 
-## 1. 3D-printed parts
+## Fasteners & adhesives
 
-| # | Part | Material | Print orientation | Layer | Infill | Walls | Note |
-|---|---|---|---|---|---|---|---|
-| **P1** | Base housing (lower box) | PETG light grey (RAL 7035) | flat on the rear face, openings up | 0.2 mm | 25% gyroid | 3 | Printed with integrated yokes |
-| **P2** | Base bottom cover | PETG light grey | flat | 0.2 mm | 25% gyroid | 3 | With keyhole slots for wall mounting |
-| **P3** | Drum head | PETG light grey | flat on one Ø50 end face | **0.16 mm** | 30% gyroid | 4 | Printed in two halves (drum-left/right) bonded with superglue (CA); hollow inside; right stub axle is hollow (Ø5) for the cable |
-| **P4** | Front insert (chord/flat face) | PETG dark grey | flat | 0.16 mm | 20% | 3 | Openings for the PIR dome and transducer; superglued (CA) to the drum |
-| ~~**P6**~~ | ~~Protective grille~~ | **excluded** | – | – | – | – | The off-the-shelf speaker has its own protection |
-| **P7** *(opt.)* | Tilt limiters | PETG | – | – | solid | – | 2×3 mm micro-stops on the yoke to block at ±60° |
+| Part | Qty | Use |
+|---|---|---|
+| M8 bolt | 2 | tilt pivot (one per yoke) |
+| M8 extended (coupling) nut | 1 | captured in one drum end; the M8 bolt threads into it (other end is a plain Ø8 hole) |
+| M3 heat-set brass insert | 4 | top-plate / lid mounting |
+| M2.5 × 6 countersunk screw | 4 | bottom cover ↔ base |
+| Ø1.75 mm self-tapping screws | 6–8 | ESP32, L298N, XL4015 into the printed standoffs |
+| Cable grommet Ø5 mm | 1 | harness pass-through |
+| Rubber feet | 4 | base |
+| Hot-melt glue | — | PIR + tweeter into the drum |
+| Superglue (CA) | — | drum halves + front panel |
 
-**Total: 6 mandatory printed parts; P7 (tilt limiters) optional.**
+## Wiring
 
----
+**Pinout (ESP32):**
 
-## 2. Off-the-shelf hardware
-
-| # | Part | Specification | Qty | Where |
-|---|---|---|---|---|
-| **H1** | M8 bolt | tilt pivot axle | 2 | One through each yoke into the drum |
-| **H2** | M8 extended (coupling) nut | long nut | 1 | Captured in one drum end face; the M8 tilt bolt threads into it to clamp the tilt. The opposite drum end is a plain Ø8 through-hole (no thread). |
-| **H4** | M2.5×6 countersunk screw | DIN 7991, stainless | 4 | Bottom cover ↔ base |
-| **H5** | **Ø1.75 mm self-tapping plastic screws** | small plastic/wood screws | 6–8 | ESP32, L298N, and the XL4015 buck driven directly into the printed standoffs |
-| **H6** | **M3 brass heat-set insert** | for the lid/top-plate | 4 | In the base, for fastening the top plate/cover |
-| **H7** | Rubber foot Ø6×3 mm | self-adhesive, grey | 4 | Corners of the bottom cover |
-| **H9** | Cable grommet Ø5 mm | silicone/rubber | 1 | Cable entry into the hollow axle |
-
----
-
-## 3. Electronic components
-
-| # | Component | Specification | **Measurements** | Qty | Placement |
-|---|---|---|---|---|---|
-| **E1** | ESP32 DevKit | ESP32-WROOM-32, USB-C | **52 × 28.68 × h10** (53.23 with USB-C) | 1 | Rear-left in the base, USB-C toward the rear wall |
-| **E2** | L298N | module with heatsink | **43.5 × 43.5 × h26** (with heatsink!) | 1 | Front-center in the base |
-| **E3** | PIR sensor | AM312 (3-pin: VCC/GND/OUT) | **dome Ø13.4, PCB 19.2 long, pins 9** | 1 | Behind the PIR dome in the drum |
-| **E4** | **Wide-band piezo tweeter** | **Ø50.1 × h18; wide-band ~1–45 kHz (reproduces 25 kHz well — NOT a unit capped at 25 kHz)** | **Ø50.1 × 18** | 1 | Recessed into the drum's chord/flat face, bonded with hot-melt glue |
-| ~~**E5**~~ | ~~LED indicator (3 mm + 220 Ω)~~ | **not designed in** — concept render only; firmware does not drive an LED | – | – | (no light-pipe cutout in the current enclosure) |
-| ~~**E6**~~ | ~~SPDT switch~~ | **not designed in** — concept render only; switch power at the 12 V adapter | – | – | (no switch cutout in the current enclosure) |
-| **E7** | **12 V DC adapter** | **≥ 1–2 A**, 5.5 × 2.1 mm barrel plug | – | 1 | External power supply |
-| **E8** | Silicone wire | AWG28–30, colored | – | ~3 m | Internal wiring |
-| **E9** | Heat-shrink tubing | 2 mm + 3 mm | – | 30 cm each | On the harness |
-| **E10** | Through-axle harness | 7 conductors, overall Ø ~4 mm | – | 12 cm | Hollow axle → base |
-| **E11** | **12 V barrel-jack socket** | panel-mount, 5.5 × 2.1 mm | – | 1 | Rear wall of the base (power input) |
-| **E12** | **DC-DC step-down (buck) — XL4015** | 12 V → 5 V, output trimmer set to 5 V | ~52 × 27 × h12 | 1 | In the base, powers the ESP32 |
-
-**Harness pinout** through the hollow stub axle (7 wires):
-
-| Color | Function |
+| GPIO | To |
 |---|---|
-| red | +5 V to PIR |
-| black | GND to PIR |
-| yellow | PIR_OUT → GPIO 27 ESP32 |
-| white-1 | piezo: H-bridge OUT1 |
-| white-2 | piezo: H-bridge OUT3 |
-| blue | spare |
-| green | spare |
+| 27 | PIR `OUT` |
+| 13 | L298N `IN1` (PWM) |
+| 12 | L298N `IN3` (inverted PWM, via GPIO matrix) |
+| 14 | L298N `ENA` + `ENB` |
 
-**Power (as-built, 12 V):**
+- L298N `IN2` and `IN4` → **GND** (unused inputs, must not float).
+- Transducer connects **across L298N OUT1 ↔ OUT3** (full H-bridge).
+
+**Power:**
 
 ```
 12 V adapter → barrel jack ─┬→ L298N Vs (12 V → H-bridge / piezo)
@@ -84,156 +56,19 @@ Final prototype form: rectangular base + cylindrical drum head on a single tilt 
 common GND
 ```
 
-Driving the H-bridge from 12 V (rather than 5 V) is what gives the piezo its high SPL — much greater range and deterrence. The **single 5 V rail from the XL4015 buck powers the ESP32 (`5V`), the L298N logic (`+5V`), and the PIR (`VCC`)** — the L298N's onboard 5 V regulator is not used. Set the XL4015 output trimmer to 5 V *before* wiring it to anything. During flashing the ESP32 can also be powered over USB.
+Set the XL4015 output trimmer to 5 V before wiring it to anything. The L298N's onboard 5 V regulator is not used.
 
-**L298N inputs.** Only `IN1` (GPIO 13) and `IN3` (GPIO 12) are driven; `ENA`+`ENB` are tied together to GPIO 14. The two unused inputs **`IN2` and `IN4` must be tied to GND** so they do not float (they control the unused outputs OUT2/OUT4). The piezo connects across **OUT1 ↔ OUT3**.
+## Printing
 
----
+- FDM, 0.4 mm nozzle, **PETG**.
+- Layers: 0.2 mm for the base/top-plate, 0.16 mm for the drum halves and front panel.
+- Infill: 25–30 % gyroid.
+- Print files (`hardware/print/`): `body`, `top-plate`, `drum-left`, `drum-right`, `front-panel`, `bolt-holder`.
+- Total: ~12–14 h, ~80–100 g PETG.
 
-## 4. Tilt mechanism
+## Assembly notes
 
-### 4.1 Geometric basis
-
-```
-side profile head and base:
-
-                  flat chord:
-                  PIR ● transducer ◉     "ULTRASONIC PET GUARD v0.7"
-              ┌────────────────────────┐
-            ╱                            ╲
-           ╱                              ╲
-          │                                │
-          │       ◯  ────── axis ───────── │   ← geometric center
-          │      M3                        │     of the Ø 50 mm circle
-           ╲                              ╱
-            ╲                            ╱
-             ╲__________________________╱
-                                              ↑
-                                  cylindrical surface
-                                  at a constant 25 mm radius
-   ════════════════════════════════════════════ from the axis at any
-            top face of the base                head tilt
-```
-
-**Principle:** the axis of rotation passes through the center of the circle → any point on the drum's cylindrical surface stays at the same distance from the axis during rotation → **the gap between the moving part (drum) and the fixed part (base) does not change at any tilt angle.** This completely eliminates the collision risk that limited v0.6.
-
-### 4.2 Assembly composition
-
-```
-top view (section along the axis):
-
-   ┌───────┐  ┌──────────────────────────────┐  ┌───────┐
-   │       │  │                              │  │       │
-   │  M8   │  │      drum head Ø50           │  │  M8   │
-   │ bolt  ├══╪══▶ extended M8 nut (captured)│  │ bolt  │
-   │       │  │                         hole▶╪══╡(Ø8    │
-   │       │  │                              │  │ hole) │
-   └───────┘  └──────────────────────────────┘  └───────┘
-       ▲                                            ▲
-       │                                            │
-   LEFT yoke                                     RIGHT yoke
-   (clamp: bolt → captured extended M8 nut)      (plain Ø8 pivot hole)
-```
-
-### 4.3 How the lock works
-
-1. On the clamping side, an **M8 bolt** passes through the yoke and threads into an **extended (coupling) M8 nut captured in that end face of the drum**.
-2. The opposite side is just a **plain Ø8 through-hole**: an M8 bolt passes through it as a plain pivot (no thread).
-3. As the M8 bolt is tightened it **pulls the drum against the yoke** → the normal force presses the drum's end face against the yoke face → static friction develops.
-4. **Friction force × friction radius = holding torque**, which far exceeds the head's gravitational torque, so the head holds whatever tilt angle you set.
-
-### 4.4 Holding-torque estimate (order of magnitude)
-
-| Parameter | Value |
-|---|---|
-| Tightening torque on the M8 bolt (hex key) | ~1.5 N·m |
-| Resulting axial force (via the M8 thread) | ~900 N |
-| PETG–metal/PETG friction coefficient | μ ≈ 0.35 |
-| Effective contact radius | ~15 mm |
-| **Holding torque** | ≈ **4.7 N·m** |
-| | |
-| Head mass | ~80 g |
-| CoG offset from the axis | ~5 mm (PIR + transducer shift it forward) |
-| **Gravitational torque at maximum** | ≈ **0.004 N·m** |
-
-**Margin: huge (~1000×).** The head will not slip even with the M8 bolt only lightly tightened.
-
-### 4.5 Usage scenario
-
-```
-   1. loosen the M8 bolt 1–2 turns ↺   (hex key / spanner)
-                  │
-                  ▼
-   2. turn the head by hand to the desired angle
-                  │
-                  ▼
-   3. tighten the M8 bolt until snug ↻
-                  │
-                  ▼
-   4. done — the position holds until the next adjustment
-```
-
-A pattern familiar to anyone who has used an IP camera, a projector, a monitor stand, or a microphone mount.
-
-### 4.6 Cable routing — why it does not break
-
-In v0.6 the cable ran as a loop *over the top* of the base → it bent at a small radius during tilting → a durability problem.
-
-In v0.7:
-
-```
-the cable passes through the HOLLOW AXLE:
-
-   ┌─ base housing ┐                ┌─ drum ────┐
-   │  ESP32        │                │  PIR      │
-   │  L298N        │                │  Piezo    │
-   │               │   hollow axle  │           │
-   │  harness ═════╪══(Ø5 inside    ╪═══ harness│
-   │  service      │   Ø6 outside)  │  service  │
-   │  loop 15mm    │                │  loop 15  │
-   └───────────────┘                └───────────┘
-                  ▲                ▲
-                  │                │
-              grommet Ø5     passage inside
-                             the axle stub
-```
-
-When the drum rotates, the cable **only twists about its own axis** inside the hollow stub, it does not stretch and does not bend at a small radius. This is a "swivel pivot" mode of cable operation (as in fixed swivel mechanisms), not a "flex cable" mode.
-
-**Service life:** tens of thousands of tilt cycles.
-
-### 4.7 Optional upgrade — detent clicks
-
-If tactile feedback at fixed angles is wanted:
-
-- Steel ball Ø3 mm + a spring in a socket on the side face of the drum.
-- Ø3 mm dimples on the inner face of the left yoke, arranged along arcs at 0°, ±15°, ±30°, ±45°.
-- The M8 bolt still provides the final lock.
-
-For the first prototype this can be skipped. The friction clamp is sufficient.
-
----
-
-## 5. Assembly sequence (brief)
-
-1. Print P1–P4 (P7 — optional).
-2. Heat-set the H6 × 4 brass inserts in the base (for the top-plate/lid screws), and capture the extended M8 nut (H2) in one end face of the drum.
-3. Inside the base, mount the ESP32 (E1, rear-left), the L298N (E2, front-center), and the XL4015 buck (E12) with Ø1.75 mm self-tapping screws (H5) driven into the printed standoffs.
-4. Wire the power: 12 V adapter (E7) → barrel jack (E11) → L298N Vs (12 V), and a branch to the XL4015 buck (E12) input. Set the XL4015 output to 5 V, then wire its output to the ESP32 5V pin. Common GND.
-5. On the rear wall of the base: mount the barrel jack (E11) in the 12 V line. (The on/off switch shown in the concept render is not in the current design — switch power at the adapter instead.)
-6. Inside the drum head, bond the tweeter (E4) into the chord/flat face and the PIR board (E3) behind its dome — **both with hot-melt glue** (no screws or inserts).
-7. Route the 7-conductor harness (E10) out through the drum's hollow stub axle, then close up the drum: join the two drum halves (drum-left/right) and bond the front panel (P4) with **superglue (CA)**. Feed the harness through the grommet (H9) in the top face of the base.
-8. Set the drum into the yokes. On the plain-hole side, pass an M8 bolt (H1) through the yoke and the Ø8 drum hole as a plain pivot. On the clamp side, thread an M8 bolt (H1) through the yoke into the captured extended M8 nut (H2) and tighten to set the tilt friction.
-9. Screw on the bottom cover (P2) with M2.5 screws (H4); stick on the feet (H7).
-
-**Assembly time for an experienced builder: ~25 minutes.**
-
----
-
-## 6. Printing: general parameters
-
-- **Printer:** FDM, build volume ≥ 120×120×120 mm (any modern one).
-- **Nozzle:** 0.4 mm.
-- **Material:** PETG (PCTG / PETG-CF — better for the mechanical part).
-- **Post-processing:** snap-fit clearances are designed for "as-printed," nothing needs drilling.
-- **Total print time** on a Bambu A1 / Prusa MK4: ~12–14 hours.
+- Heat-set the 4 × M3 inserts into the base for the top-plate; capture the extended M8 nut in one drum end.
+- Hot-glue the PIR and the tweeter into the drum; superglue the two drum halves and the front panel.
+- Route the harness out through the drum's hollow stub axle and the base grommet before closing up.
+- Mount the drum on the two M8 bolts; tighten the bolt on the captured-nut side to set the tilt friction.
