@@ -61,15 +61,15 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | 1 | ESP32 DevKit (ESP32-WROOM-32) | the controller |
 | 1 | L298N dual H-bridge module | drives the transducer in full H-bridge |
 | 1 | AM312 PIR motion sensor | 3-pin (VCC / GND / OUT) |
-| 1 | Ultrasonic piezo tweeter, ~25 kHz, Ø50 mm | 4× Ø3.2 mounting holes on a 52 mm PCD |
+| 1 | Wide-band piezo tweeter, Ø50 mm | pick a unit that reproduces well past 25 kHz (e.g. **~1–45 kHz**), **not** one capped at 25 kHz; 4× Ø3.2 mounting holes on a 52 mm PCD |
 | 1 | **12 V DC power adapter, ≥1–2 A** | powers the H-bridge at 12 V (high SPL) |
 | 1 | **12 V barrel-jack socket** (panel mount, 5.5 × 2.1 mm) | power input on the enclosure |
 | 1 | **DC-DC step-down (buck) converter — XL4015** | drops 12 V → 5 V for the ESP32 |
-| 1 | SPDT toggle switch | mains/power on-off |
-| 1 | 3 mm LED + 220 Ω resistor *(optional)* | power indicator (not driven by firmware) |
 | — | Hookup wire (AWG 28–30), heat-shrink | internal wiring harness |
 
 > The build is powered by **12 V via the barrel jack**. The 12 V feeds the L298N motor supply directly (for high SPL), while an **XL4015 buck converter steps 12 V down to 5 V** to power the ESP32 via its `5V` pin (set the XL4015 output trimmer to 5 V before connecting it). During flashing you can also just power the ESP32 over USB.
+
+> **Note:** the power LED and on/off switch visible in the concept render are **not** part of the current enclosure design (no cutouts or mounts, and the firmware does not drive an LED). Power is switched at the 12 V adapter. Add your own panel cutouts if you want them.
 
 ### 3D-printed parts (`hardware/print/`)
 
@@ -78,7 +78,7 @@ See [`docs/HARDWARE.md`](docs/HARDWARE.md) for the full hardware specification, 
 | `body.3mf` | base shell (electronics bay) |
 | `top-plate.3mf` | top plate / head module with yokes |
 | `drum-left.3mf`, `drum-right.3mf` | drum-head halves |
-| `front-panel.3mf` | front insert / chord face (PIR, transducer, LED cutouts) |
+| `front-panel.3mf` | front insert / chord face (PIR + transducer cutouts) |
 | `bolt-holder.3mf` | tilt pivot / captured M8-nut holder |
 
 Print in **PETG**, 0.2 mm layers (0.16 mm for the drum), ~25–30 % gyroid infill. Full per-part slicer settings are in [`docs/HARDWARE.md`](docs/HARDWARE.md).
